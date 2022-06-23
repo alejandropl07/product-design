@@ -1,12 +1,15 @@
 import React from "react";
 import accounting from "accounting";
 import { Button } from "@mui/material";
-import { getBasketTotal } from "../reducer";
-import { useStateValue } from "../StateProvider";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Total = () => {
-  const [{ basket }, dispatch] = useStateValue();
+  const { basket } = useSelector((state) => state.basket);
+
+  const getBasketTotal = (basket) => {
+    return basket?.reduce((amount, item) => item.price + amount, 0);
+  };
 
   return (
     <div className="total">

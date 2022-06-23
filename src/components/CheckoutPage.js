@@ -2,11 +2,11 @@ import React from "react";
 import Grid from "@mui/material/Grid";
 import { Box, Typography } from "@mui/material";
 import Total from "./Total";
-import { useStateValue } from '../StateProvider';
 import CheckoutCard from "./CheckoutCard";
+import { useSelector } from "react-redux";
 
 function CheckoutPage() {
-  const [{basket}, dispatch]  = useStateValue();
+  const { basket } = useSelector((state) => state.basket);
 
   function FormRow() {
     return (

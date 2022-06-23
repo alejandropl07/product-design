@@ -8,18 +8,17 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { Delete } from "@mui/icons-material";
 import accounting from "accounting";
-import { actionTypes } from "../reducer";
-import { useStateValue } from "../StateProvider";
+import { removeItemAction } from "../actions/basketAction";
+import { useDispatch } from "react-redux";
 
 function CheckoutCard({ product }) {
   const { id, name, productType, price, rating, image } = product;
-  const [{ basket }, dispatch] = useStateValue();
+  const dispatch = useDispatch();
+  const removeItem = (id) => dispatch(removeItemAction(id));
 
-  const removeItem = () =>
-    dispatch({
-      type: actionTypes.REMOVE_ITEM,
-      id: id,
-    });
+  const handleRemoveItem = () => {
+    removeItem(id);
+  };
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -57,7 +56,7 @@ function CheckoutCard({ product }) {
               <p>&#11088;</p>
             ))}
         </div>
-        <IconButton aria-label="delete" onClick={removeItem}>
+        <IconButton aria-label="delete" onClick={handleRemoveItem}>
           <Delete sx={{ marginLeft: "auto" }} />
         </IconButton>
       </CardActions>

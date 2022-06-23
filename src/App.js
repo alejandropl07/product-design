@@ -8,36 +8,40 @@ import SignUp from "./components/SignUp";
 import { Routes, BrowserRouter as Router, Route } from "react-router-dom";
 import { useEffect } from "react";
 import { auth } from "./firebase";
-import { useStateValue } from "./StateProvider";
-import { actionTypes } from "./reducer";
+import store from "./store";
+import { Provider } from "react-redux";
+import { setUserAction } from "./actions/userAction";
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
-  const [{ user }, dispatch] = useStateValue();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+
+  const setUser = (user) => dispatch(setUserAction(user));
 
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       console.log(authUser);
       if (authUser) {
-        dispatch({
-          type: actionTypes.SET_USER,
-          user: authUser,
-        });
+        setUser(authUser);
       }
     });
   }, []);
 
   return (
     <Router>
-      <div className="App">
+      <Provider store={store}>
         <Navbar />
-        <Routes>
-          <Route exact path="/" element={<Products />} />
-          <Route exact path="/checkout-page" element={<CheckoutPage />} />
-          <Route exact path="/sign-in" element={<SignIn />} />
-          <Route exact path="/sign-up" element={<SignUp />} />
-          <Route exact path="/checkout" element={<Checkout />} />
-        </Routes>
-      </div>
+        <div className="App">
+          <Routes>
+            <Route exact path="/" element={<Products />} />
+            <Route exact path="/checkout-page" element={<CheckoutPage />} />
+            <Route exact path="/sign-in" element={<SignIn />} />
+            <Route exact path="/sign-up" element={<SignUp />} />
+            <Route exact path="/checkout" element={<Checkout />} />
+          </Routes>
+        </div>
+      </Provider>
     </Router>
   );
 }

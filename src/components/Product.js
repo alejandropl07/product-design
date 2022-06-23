@@ -11,8 +11,8 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { AddShoppingCart } from "@mui/icons-material";
 import accounting from "accounting";
-import { actionTypes } from '../reducer';
-import { useStateValue } from '../StateProvider';
+import { addToBasketAction } from "../actions/basketAction";
+import { useDispatch } from "react-redux";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -28,25 +28,23 @@ const ExpandMore = styled((props) => {
 function Product({ product }) {
   const { id, name, productType, price, rating, image, description } = product;
   const [expanded, setExpanded] = useState(false);
-  const [{basket}, dispatch]  = useStateValue();
-
-  const addToBasket = () => {
-    dispatch({
-      type: actionTypes.ADD_TO_BASKET,
-      item: {
-        id,
-        name,
-        productType,
-        price,
-        rating,
-        image,
-        description,
-      },
-    });
-  };
+  const dispatch = useDispatch();
+  const addToBasket = (item) => dispatch(addToBasketAction(item));
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const handleAddToBasket = () => {
+    addToBasket({
+      id,
+      name,
+      productType,
+      price,
+      rating,
+      image,
+      description,
+    });
   };
 
   return (
@@ -71,13 +69,13 @@ function Product({ product }) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="Add to Cart" onClick={addToBasket}>
+        <IconButton aria-label="Add to Cart" onClick={handleAddToBasket}>
           <AddShoppingCart fontSize="large" />
         </IconButton>
         {Array(rating)
           .fill()
           .map((_, i) => (
-            <p>&#11088;</p>
+            <p key={i}>&#11088;</p>
           ))}
         <ExpandMore
           expand={expanded}

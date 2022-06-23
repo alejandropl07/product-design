@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -9,26 +9,27 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import logo from "../assets/logo.png";
 import { Badge } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { useStateValue } from "../StateProvider";
 import { auth } from "../firebase";
-import { actionTypes } from "../reducer";
+import { emptyBasketAction } from "../actions/basketAction";
+import { setUserAction } from "../actions/userAction";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Navbar() {
-  const [{ basket, user }, dispatch] = useStateValue();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const emptyBasket = (id) => dispatch(emptyBasketAction(id));
+  const setUser = (id) => dispatch(setUserAction(id));
+
+  const { basket } = useSelector((state) => state.basket);
+  const { user } = useSelector((state) => state.basket);
 
   const handleSignOut = () => {
     if (user) {
       auth.signOut();
-      dispatch({
-        type: actionTypes.EMPTY_BASKET,
-        basket: [],
-      });
-      dispatch({
-        type: actionTypes.SET_USER,
-        user: null,
-      });
-      // navigate("/sign-in");
+      emptyBasket();
+      setUser(null);
+      navigate("/sign-in");
     }
   };
 
@@ -61,7 +62,7 @@ export default function Navbar() {
           <Typography
             variant="h6"
             color="textPrimary"
-            component="paragraph"
+            component="p"
             sx={{ marginRight: "1rem" }}
           >
             Hello {user ? user.email : "Guest"}
