@@ -12,6 +12,7 @@ import store from "./store";
 import { Provider } from "react-redux";
 import { setUserAction } from "./actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
+import ProductDetails from "./components/ProductDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ function App() {
             <Route exact path="/sign-in" element={<SignIn />} />
             <Route exact path="/sign-up" element={<SignUp />} />
             <Route exact path="/checkout" element={<Checkout />} />
+            <Route exact path="/product-details" element={<ProductDetails />} />
           </Routes>
         </div>
       </Provider>
