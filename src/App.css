@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+#search-button:hover {
+  background-color: transparent;
+}
+#logo-button:hover {
+  background-color: transparent;
+}
+.icon-hover:hover {
+  color: #777d8953;
+}
