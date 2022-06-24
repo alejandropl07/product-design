@@ -9,6 +9,7 @@ import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { AddShoppingCart } from "@mui/icons-material";
 import accounting from "accounting";
 import { addToBasketAction } from "../actions/basketAction";
@@ -49,42 +50,23 @@ function Product({ product }) {
 
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardHeader
-        action={
-          <Typography
-            sx={{ marginTop: "1rem" }}
-            variant="h5"
-            color="textSecondary"
-          >
-            {accounting.formatMoney(price, "€")}
-          </Typography>
-        }
-        title={name}
-        subheader="in Stock"
-      />
-      <CardMedia component="img" height="194" image={image} alt={productType} />
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          {productType}
-        </Typography>
-      </CardContent>
+      <CardMedia component="img" height="240" image={image} alt={productType} />
       <CardActions disableSpacing>
-        <IconButton aria-label="Add to Cart" onClick={handleAddToBasket}>
-          <AddShoppingCart fontSize="large" />
+        <IconButton aria-label="add to favorites">
+          <FavoriteIcon />
         </IconButton>
         {Array(rating)
           .fill()
           .map((_, i) => (
             <p key={i}>&#11088;</p>
           ))}
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
+        <Typography
+          variant="h5"
+          color="textSecondary"
+          sx={{ marginLeft: "auto" }}
         >
-          <ExpandMoreIcon />
-        </ExpandMore>
+          {accounting.formatMoney(price, "€")}
+        </Typography>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
