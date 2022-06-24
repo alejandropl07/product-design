@@ -1,7 +1,8 @@
-import { SET_USER } from "../types";
+import { ADD_TO_FAVORITES, SET_USER } from "../types";
 
 const initialState = {
   user: null,
+  favorites: [],
 };
 
 export default function (state = initialState, action) {
@@ -10,6 +11,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         user: action.payload,
+      };
+
+    case ADD_TO_FAVORITES:
+      return {
+        ...state,
+        favorites: [...state.favorites, action.payload],
       };
 
     default:

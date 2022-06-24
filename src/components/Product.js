@@ -6,15 +6,31 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import accounting from "accounting";
+import { addToFavoritesAction } from "../actions/userAction";
+import { useDispatch, useSelector } from "react-redux";
 
 function Product({ product }) {
-  const { productType, price, rating, image } = product;
+  const dispatch = useDispatch();
+  const { id, productType, price, rating, image } = product;
+
+  const addToFavorites = (id) => dispatch(addToFavoritesAction(id));
+
+  const { favorites } = useSelector((state) => state.user);
+
+  const handleAddToFavorites = (event, id) => {
+    event.preventDefault();
+    addToFavorites(id);
+    console.log(favorites);
+  };
 
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia component="img" height="240" image={image} alt={productType} />
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        <IconButton
+          aria-label="add to favorites"
+          onClick={(event) => handleAddToFavorites(event, id)}
+        >
           <FavoriteIcon />
         </IconButton>
         {Array(rating)
