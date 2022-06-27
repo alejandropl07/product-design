@@ -1,4 +1,4 @@
-import { ADD_TO_FAVORITES, SET_USER } from "../types";
+import { ADD_TO_FAVORITES, REMOVE_FAVORITES, SET_USER } from "../types";
 
 export const setUserAction = (user) => {
   return {
@@ -7,9 +7,16 @@ export const setUserAction = (user) => {
   };
 };
 
-export const addToFavoritesAction = (id) => {
+export const addToFavoritesAction = (item) => {
   return {
     type: ADD_TO_FAVORITES,
+    payload: item,
+  };
+};
+
+export const removeFavoritesAction = (id) => {
+  return {
+    type: REMOVE_FAVORITES,
     payload: id,
   };
 };

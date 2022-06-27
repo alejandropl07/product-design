@@ -1,4 +1,4 @@
-import { ADD_TO_FAVORITES, SET_USER } from "../types";
+import { ADD_TO_FAVORITES, REMOVE_FAVORITES, SET_USER } from "../types";
 
 const initialState = {
   user: null,
@@ -17,6 +17,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         favorites: [...state.favorites, action.payload],
+      };
+
+    case REMOVE_FAVORITES:
+      return {
+        ...state,
+        favorites: state.favorites.filter((fav) => fav.id !== action.payload),
       };
 
     default:

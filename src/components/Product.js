@@ -5,22 +5,65 @@ import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { AddShoppingCart } from "@mui/icons-material";
 import accounting from "accounting";
-import { addToFavoritesAction } from "../actions/userAction";
+import {
+  addToFavoritesAction,
+  removeFavoritesAction,
+} from "../actions/userAction";
+import { addToBasketAction } from "../actions/basketAction";
 import { useDispatch, useSelector } from "react-redux";
 
 function Product({ product }) {
   const dispatch = useDispatch();
-  const { id, productType, price, rating, image } = product;
+  const { id, name, productType, price, rating, image, description } = product;
 
-  const addToFavorites = (id) => dispatch(addToFavoritesAction(id));
+  const addToFavorites = (item) => dispatch(addToFavoritesAction(item));
+  const removeFavorites = (id) => dispatch(removeFavoritesAction(id));
+  const addToBasket = (item) => dispatch(addToBasketAction(item));
 
   const { favorites } = useSelector((state) => state.user);
 
+  const existProduct = (id) => {
+    let exist = false;
+    favorites.map((item) => {
+      if (item.id === id) {
+        exist = true;
+        return exist;
+      }
+    });
+    return exist;
+  };
+
   const handleAddToFavorites = (event, id) => {
     event.preventDefault();
-    addToFavorites(id);
+    const exist = existProduct(id);
+    console.log(exist);
+    exist
+      ? removeFavorites(id)
+      : addToFavorites({
+          id,
+          name,
+          productType,
+          price,
+          rating,
+          image,
+          description,
+        });
     console.log(favorites);
+  };
+
+  const handleAddToBasket = (event) => {
+    event.preventDefault();
+    addToBasket({
+      id,
+      name,
+      productType,
+      price,
+      rating,
+      image,
+      description,
+    });
   };
 
   return (
@@ -28,10 +71,17 @@ function Product({ product }) {
       <CardMedia component="img" height="240" image={image} alt={productType} />
       <CardActions disableSpacing>
         <IconButton
-          aria-label="add to favorites"
+          aria-label="Add to favorites"
           onClick={(event) => handleAddToFavorites(event, id)}
         >
-          <FavoriteIcon />
+          <FavoriteIcon color= {existProduct(id) ? "error"  : ""}/>
+        </IconButton>
+
+        <IconButton
+          aria-label="Add to Cart"
+          onClick={(event) => handleAddToBasket(event)}
+        >
+          <AddShoppingCart fontSize="large" />
         </IconButton>
         {Array(rating)
           .fill()
