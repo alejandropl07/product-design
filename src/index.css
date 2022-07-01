@@ -4,6 +4,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding: 8rem;
+  padding-top: unset !important;
 }
 
 code {
@@ -22,3 +24,10 @@ code {
 .checkout-button {
   margin-top: "2rem";
 }
+
+/* .css-hyum1k-MuiToolbar-root {
+  padding-left: 4rem;
+  padding-right: 4rem;
+} */
+
+

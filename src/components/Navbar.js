@@ -19,6 +19,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonIcon from "@mui/icons-material/Person";
+import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 
 // export default function Navbar() {
 // const dispatch = useDispatch();
@@ -287,6 +288,10 @@ export default function Navbar() {
     handleMobileMenuClose();
   };
 
+  // const handle = () => {
+  //   alert('sd')
+  // };
+
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
@@ -318,7 +323,7 @@ export default function Navbar() {
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{
-        vertical: "top",
+        vertical: "bottom",
         horizontal: "right",
       }}
       id={mobileMenuId}
@@ -331,7 +336,7 @@ export default function Navbar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <Link to={!user ? "/sign-in" : "/user-details"}>
+        <Link to={!user ? "/sign-in" : "/user-details"} style={{ textDecoration: 'none', color: 'black'}}>
           <IconButton
             aria-label="show-cart-items"
             color="inherit"
@@ -346,7 +351,6 @@ export default function Navbar() {
               variant="h6"
               noWrap
               component="p"
-              // sx={{ display: { xs: "none", sm: "block" } }}
             >
               {user ? "Perfil" : "Autenticar"}
             </Typography>
@@ -354,7 +358,7 @@ export default function Navbar() {
         </Link>
       </MenuItem>
       <MenuItem>
-        <Link to="/checkout-page">
+        <Link to="/checkout-page" style={{ textDecoration: 'none', color: 'black'}}>
           <IconButton
             aria-label="show-cart-items"
             color="inherit"
@@ -377,7 +381,6 @@ export default function Navbar() {
                 variant="h6"
                 noWrap
                 component="p"
-                // sx={{ display: { xs: "none", sm: "block" } }}
               >
                 Favoritos
               </Typography>
@@ -386,7 +389,7 @@ export default function Navbar() {
         </Link>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
-        <Link to="/checkout-page">
+        <Link to="/checkout-page" style={{ textDecoration: 'none', color: 'black'}}>
           <IconButton
             aria-label="show-cart-items"
             color="inherit"
@@ -410,7 +413,6 @@ export default function Navbar() {
                 variant="h6"
                 noWrap
                 component="p"
-                // sx={{ display: { xs: "none", sm: "block" } }}
               >
                 Carrito
               </Typography>
@@ -425,7 +427,7 @@ export default function Navbar() {
     <Box sx={{ flexGrow: 1, marginBottom: "7rem" }}>
       <AppBar
         position="fixed"
-        sx={{ boxShadow: "none", backgroundColor: "whitesmoke" }}
+        sx={{ boxShadow: "none", backgroundColor: "whitesmoke", paddingLeft: "4rem", paddingRight: "4rem" }}
       >
         <Toolbar>
           <Link to="/">
@@ -452,9 +454,10 @@ export default function Navbar() {
             aria-label="show-cart-items"
             color="inherit"
             disableRipple="true"
+            onClick={handle}
           >
             <SearchIcon
-              // fontSize="large"
+              className="icon-hover"
               sx={{
                 boxShadow: "none",
                 color: "black",
@@ -463,6 +466,7 @@ export default function Navbar() {
               }}
             />
           </IconButton>
+          {/* {{ if( isMobile) }}} */}
           <TextField
             placeholder="¿Que estás buscando...?"
             variant="standard"
