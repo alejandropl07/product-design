@@ -13,6 +13,7 @@ import {
 } from "../actions/userAction";
 import { addToBasketAction } from "../actions/basketAction";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 function Product({ product }) {
   const dispatch = useDispatch();
@@ -67,36 +68,48 @@ function Product({ product }) {
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardMedia component="img" height="240" image={image} alt={productType} />
-      <CardActions disableSpacing>
-        <IconButton
-          aria-label="Add to favorites"
-          onClick={(event) => handleAddToFavorites(event, id)}
-        >
-          <FavoriteIcon color= {existProduct(id) ? "error"  : ""}/>
-        </IconButton>
+    <Link
+      to="/product-details"
+      state={{ product }}
+      style={{ textDecoration: "none" }}
+    >
+      <Card sx={{ maxWidth: 345 }}>
+        <CardMedia
+          component="img"
+          height="250"
+          width="200"
+          image={image}
+          alt={productType}
+        />
+        <CardActions disableSpacing>
+          <IconButton
+            aria-label="Add to favorites"
+            onClick={(event) => handleAddToFavorites(event, id)}
+          >
+            <FavoriteIcon color={existProduct(id) ? "error" : ""} />
+          </IconButton>
 
-        <IconButton
-          aria-label="Add to Cart"
-          onClick={(event) => handleAddToBasket(event)}
-        >
-          <AddShoppingCart fontSize="large" />
-        </IconButton>
-        {Array(rating)
-          .fill()
-          .map((_, i) => (
-            <p key={i}>&#11088;</p>
-          ))}
-        <Typography
-          variant="h5"
-          color="textSecondary"
-          sx={{ marginLeft: "auto" }}
-        >
-          {accounting.formatMoney(price, "€")}
-        </Typography>
-      </CardActions>
-    </Card>
+          <IconButton
+            aria-label="Add to Cart"
+            onClick={(event) => handleAddToBasket(event)}
+          >
+            <AddShoppingCart fontSize="large" />
+          </IconButton>
+          {/* {Array(rating)
+            .fill()
+            .map((_, i) => (
+              <p key={i}>&#11088;</p>
+            ))} */}
+          <Typography
+            variant="h5"
+            color="textSecondary"
+            sx={{ marginLeft: "auto" }}
+          >
+            {accounting.formatMoney(price, "€")}
+          </Typography>
+        </CardActions>
+      </Card>
+    </Link>
   );
 }
 

@@ -454,7 +454,7 @@ export default function Navbar() {
             aria-label="show-cart-items"
             color="inherit"
             disableRipple="true"
-            onClick={handle}
+            // onClick={handle}
           >
             <SearchIcon
               className="icon-hover"
